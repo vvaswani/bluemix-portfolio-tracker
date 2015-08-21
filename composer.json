@@ -1,0 +1,10 @@
+{
+    "require": {
+        "silex/silex": "*",
+        "twig/twig": "*",        
+        "hybridauth/hybridauth": "2.*",
+        "guzzlehttp/guzzle": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

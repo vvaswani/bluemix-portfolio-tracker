@@ -1,0 +1,8 @@
+---
+applications:
+- name: portfolio-tracker
+memory: 256M
+instances: 1
+host: portfolio-tracker
+buildpack: https://github.com/cloudfoundry/php-buildpack.git
+stack: cflinuxfs2

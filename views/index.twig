@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script>      
+      var myApp = angular.module('myApp', []);
+      
+      myApp.controller("myAppController", function ($scope, $http) {
+        $scope.items = {};
+        $scope.items.results = [];
+        $scope.items.query = '';
+        
+        $scope.search = function() {
+          if ($scope.items.query != '') {
+            $http({
+                method: 'GET',
+                url: '/search/' + $scope.items.query,
+              }).
+              success(function(data) {
+                $scope.items.results = data.docs;
+              });
+          } else {
+            $scope.items.results = [];
+          }
+        };
+      });
+
+    $(document).ready(function() {
+      if (window.location.hash) {
+        $('#navbar a').removeClass('ui-btn-active');
+        var hash = window.location.hash;
+        $('a[href="'+hash+'"').addClass('ui-btn-active');
+      }
+    });      
+    </script>  
+  </head>
+  <body>
+
+    <div data-role="page">
+
+      <div data-role="header">
+        <h1>Portfolio Tracker</h1>
+        <a data-ajax="false" href="/logout" data-role="button" class="ui-btn-right">Sign out</a>
+        <div class="ui-bar ui-bar-a" style="text-align: center">
+          {{ uid }}
+        </div>
+      </div>
+
+      <div data-role="content" ng-app="myApp">
+        <div data-role="tabs">
+        
+          <div id="navbar" data-role="navbar">
+            <ul>
+              <li><a id="tab-search" href="#search" data-theme="a" class="ui-btn-active">Search</a></li>
+              <li><a id="tab-manage" href="#manage" data-theme="a" class="">Manage</a></li>
+            </ul>
+          </div>
+          
+          <div id="search" ng-controller="myAppController">
+            <h2 class="ui-bar ui-bar-a">Stock Search</h2>
+            <div class="ui-body">
+                <input type="search" name="query" ng-model="items.query" />
+                <button ng-click="search()">Search</button>
+            </div>      
+            <h2 class="ui-bar ui-bar-a">Search Results</h2>   
+            <div class="ui-body">
+              <ul data-role="listview" data-split-theme="d">
+                <li ng-repeat="r in items.results">
+                {% verbatim %}
+                  <a>{{r.name}}</a>
+                  <a href="/add/{{r.code}}" data-ajax="false" data-inline="true" data-role="button" data-icon="plus" data-theme="a">Add</a>
+                {% endverbatim %}
+                </li>
+              </ul>                    
+            </div>          
+          </div>
+
+          <div id="manage">
+            <h2 class="ui-bar ui-bar-a">Portfolio Summary</h2>
+            <div class="ui-body">
+              <ul data-role="listview">          
+              {% for id, item in data %}
+                <li>
+                  <a href="#">
+                    <div class="ui-grid-a">
+                      <div class="ui-block-a">
+                        {{ item.symbol }}
+                      </div>
+                      <div class="ui-block-b">
+                         <span class="ui-li-count">${{ item.value }}</span>                
+                      </div>
+                    </div>
+                    <div>
+                      <p>{{ item.units }} units at ${{ item.price}}</p>
+                    </div>
+                  </a>
+                  <a href="/delete/{{ id }}" data-ajax="false" data-inline="true" data-role="button" data-icon="minus" data-theme="a">Remove</a>                 
+                </li>
+              {% endfor %}
+              </ul>
+            </div>          
+          </div>
+
+        </div>
+        
+      </div>
+
+      <div data-role="footer">
+        <h4><a href="/legal" data-ajax="false">Legal</a></h4>
+      </div>
+
+    </div>
+      
+  </body>
+</html>
+
