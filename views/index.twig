@@ -20,7 +20,7 @@
           if ($scope.items.query != '') {
             $http({
                 method: 'GET',
-                url: '/search/' + $scope.items.query,
+                url: '{{ app.request.basepath }}/search/' + $scope.items.query,
               }).
               success(function(data) {
                 $scope.items.results = data.docs;
@@ -74,8 +74,8 @@
                 <li ng-repeat="r in items.results">
                 {% verbatim %}
                   <a>{{r.name}}</a>
-                  <a href="/add/{{r.code}}" data-ajax="false" data-inline="true" data-role="button" data-icon="plus" data-theme="a">Add</a>
                 {% endverbatim %}
+                  <a href="{{ app.request.basepath }}{% verbatim %}/add/{{r.code}}{% endverbatim %}" data-ajax="false" data-inline="true" data-role="button" data-icon="plus" data-theme="a">Add</a>                
                 </li>
               </ul>                    
             </div>          
@@ -100,7 +100,7 @@
                       <p>{{ item.units }} units at ${{ item.price}}</p>
                     </div>
                   </a>
-                  <a href="/delete/{{ id }}" data-ajax="false" data-inline="true" data-role="button" data-icon="minus" data-theme="a">Remove</a>                 
+                  <a href="{{ app.request.basepath }}/delete/{{ id }}" data-ajax="false" data-inline="true" data-role="button" data-icon="minus" data-theme="a">Remove</a>                 
                 </li>
               {% endfor %}
               </ul>

@@ -112,7 +112,7 @@ $app->get('/index', function () use ($app, $guzzle) {
 $app->get('/search/{query}', function ($query) use ($app, $guzzle) {
   // execute search on Quandl API
   // specify search scope and required response fields 
-  $response = $guzzle->get('https://www.quandl.com/api/v2/datasets.json?api_key=' . $app->config['quandl_key'] . '.json&source_code=WIKI&query='.urlencode($query));
+  $response = $guzzle->get('https://www.quandl.com/api/v2/datasets.json?api_key=' . $app->config['quandl_key'] . '&source_code=WIKI&query='.urlencode($query));
   $result = $response->getBody();
   // remove unwanted trailing strings
   $result = str_replace(' Prices, Dividends, Splits and Trading Volume', '', $result);
