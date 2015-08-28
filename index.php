@@ -60,7 +60,6 @@ $authenticate = function (Request $request, Application $app) use ($config) {
 // initialize HTTP client
 $guzzle = new GuzzleHttp\Client([
   'base_uri' => $app->config['db_uri'] . '/',
-  'verify' => false
 ]);
 
 // index page handlers

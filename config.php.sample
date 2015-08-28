@@ -1,9 +1,9 @@
 <?php
 // config.php
 $config = [
-  'quandl_key'    => "YOUR-QUANDL-API-KEY",
-  'oauth_id'      => "YOUR-OAUTH-ID",
-  'oauth_secret'  => "YOUR-OAUTH-SECRET",
-  'db_uri'        => "YOUR-CLOUDANT-DB-URI",
-  'db_name'       => "YOUR-DB-NAME"
+  'quandl_key'    => 'YOUR-QUANDL-API-KEY',
+  'oauth_id'      => 'YOUR-OAUTH-ID',
+  'oauth_secret'  => 'YOUR-OAUTH-SECRET',
+  'db_uri'        => 'YOUR-CLOUDANT-DB-URI',
+  'db_name'       => 'YOUR-DB-NAME'
 ];
