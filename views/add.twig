@@ -16,7 +16,7 @@
         <div>
           <h2 class="ui-bar ui-bar-a">Add to Portfolio: {{symbol}}</h2>
           <div class="ui-body">
-            <form method="post" action="/add" data-ajax="false">
+            <form method="post" action="{{ app.request.basepath }}/add" data-ajax="false">
               <input type="hidden" name="symbol" value="{{symbol}}" />
               <label for="units">Number of shares:</label> 
               <input type="text" id="units" name="units" />

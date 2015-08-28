@@ -17,7 +17,7 @@ $app->config = $config;
 
 // add configuration for HybridAuth
 $app->config['hybridauth']  = array(
-  "base_url" => 'http://'.$_SERVER['HTTP_HOST']. '/callback',
+  "base_url" => 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/callback',
   "providers" => array (
   "Google" => array (
     "enabled" => true,
@@ -43,11 +43,11 @@ if ($services = getenv("VCAP_SERVICES")) {
   $app->config['db_uri'] = $services_json['cloudantNoSQLDB'][0]['credentials']['url'];
 } 
 
-// initialize HybridAuth client
-$auth = new Hybrid_Auth($app->config['hybridauth']);
-
 // start session
 session_start();
+
+// initialize HybridAuth client
+$auth = new Hybrid_Auth($app->config['hybridauth']);
 
 // register authentication middleware
 $authenticate = function (Request $request, Application $app) use ($config) {
@@ -129,6 +129,7 @@ $app->get('/add/{symbol}', function ($symbol) use ($app) {
 })
 ->before($authenticate);
 
+// form submission handler
 $app->post('/add', function (Request $request) use ($app, $guzzle) {
   $symbol = strip_tags($request->get('symbol'));
   $units = (int)$request->get('units');

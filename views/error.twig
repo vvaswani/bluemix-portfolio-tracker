@@ -20,7 +20,7 @@
         <div>
         {{ error }}
         </div>
-        <a href="/index#search" data-ajax="false" data-role="button">Try again</a>
+        <a href="{{ app.request.basepath }}/index#search" data-ajax="false" data-role="button">Try again</a>
       </div>
       {% endif %}
 
